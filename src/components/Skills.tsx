@@ -1,5 +1,5 @@
-
 import { motion } from "framer-motion";
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "./ui/hover-card";
 
 interface SkillCategory {
   name: string;
@@ -72,53 +72,25 @@ export const Skills = () => {
                   viewport={{ once: true, margin: "-100px" }}
                 >
                   {category.skills.map((skill) => (
-                    <motion.span
-                      key={skill}
-                      className="px-3 py-2 bg-primary/10 text-foreground rounded-lg hover:bg-primary/20 transition-colors"
-                      variants={item}
-                    >
-                      {skill}
-                    </motion.span>
+                    <HoverCard key={skill}>
+                      <HoverCardTrigger>
+                        <motion.span
+                          className="px-3 py-2 bg-primary/10 text-foreground rounded-lg hover:bg-primary/20 
+                                   transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-[0_0_15px_var(--glow-color)]"
+                          variants={item}
+                        >
+                          {skill}
+                        </motion.span>
+                      </HoverCardTrigger>
+                      <HoverCardContent className="glass-card w-auto">
+                        <p className="text-sm">{skill}</p>
+                      </HoverCardContent>
+                    </HoverCard>
                   ))}
                 </motion.div>
               </motion.div>
             ))}
           </div>
-          
-          <motion.div 
-            className="glass-card rounded-xl p-6 mt-8 neon-border"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-          >
-            <h3 className="text-xl font-bold mb-4 text-gradient">Skill Proficiency</h3>
-            
-            <div className="space-y-4">
-              {[
-                { skill: "Frontend Development", level: 85 },
-                { skill: "Backend Development", level: 80 },
-                { skill: "Data Structures & Algorithms", level: 75 },
-                { skill: "Database Management", level: 70 }
-              ].map((item, index) => (
-                <div key={index} className="space-y-2">
-                  <div className="flex justify-between">
-                    <span>{item.skill}</span>
-                    <span>{item.level}%</span>
-                  </div>
-                  <div className="h-2 bg-secondary/30 rounded-full overflow-hidden">
-                    <motion.div
-                      className="h-full bg-gradient-to-r from-primary to-secondary"
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${item.level}%` }}
-                      viewport={{ once: true, margin: "-100px" }}
-                      transition={{ duration: 1, delay: 0.5 + index * 0.2 }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
         </motion.div>
       </div>
     </section>
