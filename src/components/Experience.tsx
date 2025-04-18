@@ -29,7 +29,7 @@ export const Experience = () => {
     {
       id: 2,
       title: "Treasurer",
-      company: "Onyxe-Cell",
+      company: "Onyx E-Cell",
       location: "Mysore, India",
       duration: "2024 - 2025",
       description: [

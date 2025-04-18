@@ -29,7 +29,7 @@ export const About = () => {
                   My academic journey has equipped me with strong foundations in core computer science concepts, while my practical experiences have honed my skills in building impactful applications.
                 </p>
                 <p>
-                  Beyond coding, I'm actively involved in entrepreneurial events as a Treasurer of Onyxe-Cell, organizing impactful initiatives like E-Week 2024 and other innovative competitions.
+                  Beyond coding, I'm actively involved in entrepreneurial events as a Treasurer of Onyx E-Cell, organizing impactful initiatives like E-Week 2024 and other innovative competitions.
                 </p>
               </div>
             </motion.div>

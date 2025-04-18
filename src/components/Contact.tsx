@@ -32,10 +32,10 @@ export const Contact = () => {
       // You would need to sign up for EmailJS and add your service ID, template ID, and public key
       if (formRef.current) {
         await emailjs.sendForm(
-          'YOUR_SERVICE_ID', // Replace with your service ID
-          'YOUR_TEMPLATE_ID', // Replace with your template ID
+          'service_uex1fqi', // Replace with your service ID
+          'template_ctmziz6', // Replace with your template ID
           formRef.current,
-          'YOUR_PUBLIC_KEY' // Replace with your public key
+          'MF8ix_CJGLIpEiplx' // Replace with your public key
         );
       }
       

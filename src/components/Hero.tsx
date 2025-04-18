@@ -77,7 +77,7 @@ export const Hero = () => {
           
           <div className="h-12 md:h-16 mb-8">
             <h2 className="text-xl md:text-2xl lg:text-3xl text-foreground/80">
-              Computer Science Student & Software Engineer
+              Computer Science Student & Full Stack Developer
             </h2>
           </div>
           
