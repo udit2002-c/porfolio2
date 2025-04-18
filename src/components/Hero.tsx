@@ -1,13 +1,12 @@
-
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import { SpaceBackground } from "./SpaceBackground";
 
 export const Hero = () => {
   return (
     <section id="hero" className="min-h-screen flex flex-col justify-center relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 bg-space-gradient -z-10"></div>
-      <div className="absolute inset-0 bg-hero-pattern -z-10 opacity-10"></div>
+      {/* Space background */}
+      <SpaceBackground />
       
       {/* Floating glowing dots */}
       <motion.div 
