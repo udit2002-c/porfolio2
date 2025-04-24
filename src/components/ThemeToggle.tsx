@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 export const ThemeToggle = () => {
   const [darkMode, setDarkMode] = useState(false);
 
-  // Initialize theme based on user preference
   useEffect(() => {
     // Check if user has previously set a theme preference
     const savedTheme = localStorage.getItem("theme");

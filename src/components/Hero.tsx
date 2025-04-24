@@ -65,7 +65,7 @@ export const Hero = () => {
             transition={{ duration: 0.5 }}
           >
             <img 
-              src="/lovable-uploads/b488d8dd-7631-4864-a168-a64fe69e592e.png" 
+              src="/images/1.png" 
               alt="Udit Narain Tewari"
               className="w-full h-full object-cover"
             />
