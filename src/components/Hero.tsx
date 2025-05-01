@@ -4,7 +4,7 @@ import { SpaceBackground } from "./SpaceBackground";
 
 export const Hero = () => {
   return (
-    <section id="hero" className="min-h-screen flex flex-col justify-center relative overflow-hidden">
+    <section id="hero" className="min-h-screen flex flex-col justify-center relative overflow-hidden px-4">
       {/* Space background */}
       <SpaceBackground />
       
@@ -51,7 +51,7 @@ export const Hero = () => {
         }}
       />
 
-      <div className="container mx-auto px-4 py-10">
+      <div className="container mx-auto">
         <motion.div 
           className="text-center"
           initial={{ opacity: 0, y: 20 }}
@@ -59,40 +59,41 @@ export const Hero = () => {
           transition={{ duration: 0.8 }}
         >
           <motion.div
-            className="w-48 h-48 mx-auto mb-8 rounded-full overflow-hidden border-4 border-primary/50 shadow-[0_0_15px_var(--glow-color)]"
+            className="w-32 h-32 md:w-48 md:h-48 mx-auto mb-6 md:mb-8 rounded-full overflow-hidden 
+                       border-4 border-primary/50 shadow-[0_0_15px_var(--glow-color)]"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
             <img 
-              src="/images/1.png" 
-              alt="Udit Narain Tewari"
+              src="public/images/1.png" 
+              alt="Profile"
               className="w-full h-full object-cover"
             />
           </motion.div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4">
+          <h1 className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold mb-4">
             <span className="text-gradient">Udit Narain Tewari</span>
           </h1>
           
-          <div className="h-12 md:h-16 mb-8">
-            <h2 className="text-xl md:text-2xl lg:text-3xl text-foreground/80">
+          <div className="h-8 md:h-12 lg:h-16 mb-6 md:mb-8">
+            <h2 className="text-lg md:text-xl lg:text-2xl xl:text-3xl text-foreground/80">
               Computer Science Student & Full Stack Developer
             </h2>
           </div>
           
           <motion.div 
-            className="flex flex-wrap justify-center gap-4 my-8"
+            className="flex flex-wrap justify-center gap-3 md:gap-4 my-6 md:my-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <a href="#contact" className="futuristic-button">Get in Touch</a>
-            <a href="#projects" className="futuristic-button">View Projects</a>
+            <a href="#contact" className="futuristic-button text-sm md:text-base">Get in Touch</a>
+            <a href="#projects" className="futuristic-button text-sm md:text-base">View Projects</a>
           </motion.div>
           
           <motion.div 
-            className="flex justify-center gap-6 mt-10"
+            className="flex justify-center gap-4 md:gap-6 mt-8 md:mt-10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8, duration: 0.8 }}
