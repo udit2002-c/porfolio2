@@ -66,7 +66,7 @@ export const Hero = () => {
             transition={{ duration: 0.5 }}
           >
             <img 
-              src="public/images/1.png" 
+              src="./images/1.png" 
               alt="Profile"
               className="w-full h-full object-cover"
             />
