@@ -65,11 +65,11 @@ export const Hero = () => {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <img 
-              src="public/images/1.png" 
+            {/* <img 
+              src="./public/images/1.jpg" 
               alt="Profile"
               className="w-full h-full object-cover"
-            />
+            /> */}
           </motion.div>
 
           <h1 className="text-3xl md:text-4xl lg:text-6xl xl:text-7xl font-bold mb-4">
