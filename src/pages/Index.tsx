@@ -1,5 +1,3 @@
-
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
@@ -19,7 +17,6 @@ const Index = () => {
 
   return (
     <div className="relative overflow-hidden">
-      <ThemeToggle />
       <Navbar />
       <Hero />
       <About />

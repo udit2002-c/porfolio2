@@ -1,93 +1,86 @@
 import { motion } from "framer-motion";
-import { HoverCard, HoverCardTrigger, HoverCardContent } from "./ui/hover-card";
 
 interface SkillCategory {
   name: string;
   skills: string[];
+  icon: string;
 }
 
 export const Skills = () => {
   const skillCategories: SkillCategory[] = [
     {
       name: "Languages",
+      icon: "💻",
       skills: ["Java", "Python", "C++", "JavaScript", "TypeScript", "SQL"]
     },
     {
-      name: "Frameworks/Tools",
+      name: "Frameworks & Tools",
+      icon: "🛠️",
       skills: ["Spring Boot", "ReactJS", "Node.js", "Express", "Next.js", "Git", "Postman", "Figma"]
     },
     {
-      name: "Databases/Tech",
+      name: "Databases & Technologies",
+      icon: "🗄️",
       skills: ["MongoDB", "MySQL", "Firebase", "REST APIs", "JWT", "HTML", "CSS", "Vercel"]
     },
     {
-      name: "Coursework",
+      name: "Computer Science",
+      icon: "📚",
       skills: ["Analysis of Algorithms and Design", "Computer Networks", "Operating Systems", "Database Management Systems", "Web Technologies", "Data Structures"]
     }
   ];
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-  };
-
   return (
-    <section id="skills" className="py-20 relative">
-      <div className="container mx-auto px-4">
+    <section id="skills" className="py-20 relative overflow-hidden">
+      {/* Space background */}
+      <div className="absolute inset-0 bg-black">
+        <div className="nebula-effect absolute inset-0"></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.6 }}
         >
-          <h2 className="section-title text-center mb-16">Skills</h2>
+          <h2 className="space-title">Skills & Technologies</h2>
           
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
             {skillCategories.map((category, index) => (
               <motion.div
                 key={category.name}
-                className="glass-card rounded-xl p-6 neon-border"
-                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                className="space-card p-8"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.7, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
               >
-                <h3 className="text-xl font-bold mb-4 text-gradient">{category.name}</h3>
+                <h3 className="text-xl font-bold mb-6 flex items-center text-white">
+                  <span className="mr-4 text-2xl">{category.icon}</span>
+                  {category.name}
+                </h3>
                 
-                <motion.div 
-                  className="flex flex-wrap gap-3"
-                  variants={container}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-100px" }}
-                >
-                  {category.skills.map((skill) => (
-                    <HoverCard key={skill}>
-                      <HoverCardTrigger>
-                        <motion.span
-                          className="px-3 py-2 bg-primary/10 text-foreground rounded-lg hover:bg-primary/20 
-                                   transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-[0_0_15px_var(--glow-color)]"
-                          variants={item}
-                        >
-                          {skill}
-                        </motion.span>
-                      </HoverCardTrigger>
-                      <HoverCardContent className="glass-card w-auto">
-                        <p className="text-sm">{skill}</p>
-                      </HoverCardContent>
-                    </HoverCard>
+                <div className="flex flex-wrap gap-3">
+                  {category.skills.map((skill, skillIndex) => (
+                    <motion.span
+                      key={skill}
+                      className="px-4 py-2 bg-black/50 text-white text-sm rounded-lg border border-red-500/30 
+                               hover:bg-red-500/20 hover:border-red-500 hover:text-red-300
+                               transition-all duration-300 cursor-default cosmic-glow"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ 
+                        duration: 0.3, 
+                        delay: (index * 0.05) + (skillIndex * 0.02) 
+                      }}
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      {skill}
+                    </motion.span>
                   ))}
-                </motion.div>
+                </div>
               </motion.div>
             ))}
           </div>

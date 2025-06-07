@@ -14,6 +14,7 @@ export const ThemeToggle = () => {
       setDarkMode(true);
       document.documentElement.classList.add("dark");
     } else {
+      setDarkMode(false);
       document.documentElement.classList.remove("dark");
     }
   }, []);
@@ -32,15 +33,17 @@ export const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed top-4 right-4 md:top-6 md:right-6 z-50 w-8 h-8 md:w-10 md:h-10 rounded-full 
-                 flex items-center justify-center bg-card/40 backdrop-blur-md hover-glow 
-                 text-foreground transition-all duration-300 ease-in-out"
+      className="fixed top-4 right-4 md:top-6 md:right-6 z-50 w-12 h-12 rounded-full 
+                 flex items-center justify-center bg-black/60 dark:bg-white/10 backdrop-blur-md 
+                 border border-red-500/50 hover:border-red-400 hover:bg-red-500/20 
+                 text-red-400 hover:text-red-300 transition-all duration-300 ease-in-out 
+                 hover:shadow-lg hover:shadow-red-500/30"
       aria-label="Toggle theme"
     >
       {darkMode ? (
-        <Sun className="h-4 w-4 md:h-5 md:w-5 animate-fade-in" />
+        <Sun className="h-5 w-5 animate-fade-in" />
       ) : (
-        <Moon className="h-4 w-4 md:h-5 md:w-5 animate-fade-in" />
+        <Moon className="h-5 w-5 animate-fade-in" />
       )}
     </button>
   );
