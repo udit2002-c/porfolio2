@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
-import { Send, Mail, Github, Linkedin, MessageCircle, CheckCircle, AlertCircle } from "lucide-react";
-import { useState, useRef } from "react";
+import { Send, Mail, Github, Linkedin, Terminal } from "lucide-react";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import emailjs from '@emailjs/browser';
 
 export const Contact = () => {
   const { toast } = useToast();
-  const formRef = useRef<HTMLFormElement>(null);
   
   const [formData, setFormData] = useState({
     name: "",
@@ -22,48 +21,9 @@ export const Contact = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Test function to verify EmailJS setup
-  const testEmailJS = async () => {
-    try {
-      console.log('Testing EmailJS connection...');
-      
-      const testData = {
-        name: "Test User",
-        email: "test@example.com", 
-        subject: "Test Email",
-        message: "This is a test message to verify EmailJS setup."
-      };
-
-      const result = await emailjs.send(
-        'service_uex1fqi',
-        'template_ctmziz6',
-        testData,
-        'MF8ix_CJGLIpEiplx'
-      );
-      
-      console.log('Test email result:', result);
-      toast({
-        title: "Test email sent successfully!",
-        description: "EmailJS is working correctly.",
-        variant: "default",
-      });
-    } catch (error) {
-      console.error('Test email failed:', error);
-      toast({
-        title: "Test email failed",
-        description: `Error: ${error}`,
-        variant: "destructive",
-      });
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    console.log('Form submission started...');
-    console.log('Form data:', formData);
-    
-    // Basic validation
     if (!formData.name.trim() || !formData.email.trim() || !formData.subject.trim() || !formData.message.trim()) {
       toast({
         title: "Please fill in all fields",
@@ -73,7 +33,6 @@ export const Contact = () => {
       return;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       toast({
@@ -87,9 +46,6 @@ export const Contact = () => {
     setIsSubmitting(true);
     
     try {
-      console.log('Attempting to send email...');
-      
-      // Method 1: Using emailjs.send (direct approach)
       const templateParams = {
         name: formData.name,
         email: formData.email,
@@ -98,8 +54,6 @@ export const Contact = () => {
         to_email: 'udittewari888@gmail.com'
       };
       
-      console.log('Template params:', templateParams);
-      
       const result = await emailjs.send(
         'service_uex1fqi',
         'template_ctmziz6',
@@ -107,15 +61,12 @@ export const Contact = () => {
         'MF8ix_CJGLIpEiplx'
       );
       
-      console.log('Email sent successfully:', result);
-      
       toast({
         title: "Message sent successfully! ✨",
         description: "Thank you for reaching out! I'll get back to you within 24 hours.",
         variant: "default",
       });
       
-      // Reset form
       setFormData({
         name: "",
         email: "",
@@ -124,34 +75,9 @@ export const Contact = () => {
       });
       
     } catch (error) {
-      console.error('Email sending failed:', error);
-      console.error('Error details:', {
-        name: error?.name,
-        message: error?.message,
-        status: error?.status,
-        text: error?.text
-      });
-      
-      // More specific error handling
-      let errorMessage = "There was a problem sending your message.";
-      
-      if (error instanceof Error) {
-        if (error.message.includes('Invalid template ID')) {
-          errorMessage = "Email template not found. Please contact me directly at udittewari888@gmail.com";
-        } else if (error.message.includes('Invalid service ID')) {
-          errorMessage = "Email service not configured. Please contact me directly at udittewari888@gmail.com";
-        } else if (error.message.includes('Invalid user ID')) {
-          errorMessage = "Email service authentication failed. Please contact me directly at udittewari888@gmail.com";
-        } else if (error.message.includes('network') || error.message.includes('fetch')) {
-          errorMessage = "Network error. Please check your connection and try again.";
-        } else {
-          errorMessage = `Error: ${error.message}`;
-        }
-      }
-      
       toast({
         title: "Message failed to send",
-        description: errorMessage,
+        description: "Please try again or contact me directly at udittewari888@gmail.com",
         variant: "destructive",
       });
     } finally {
@@ -160,12 +86,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-black">
-        <div className="nebula-effect absolute inset-0"></div>
-      </div>
-
+    <section id="contact" className="py-20 relative overflow-hidden bg-black">
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -173,13 +94,26 @@ export const Contact = () => {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.4 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-            <span className="text-white">Get In </span>
-            <span className="text-red-400">Touch</span>
+          {/* IDE Header */}
+          <div className="max-w-6xl mx-auto mb-8">
+            <div className="bg-gray-800 rounded-t border-b border-gray-600 px-4 py-2 flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              </div>
+              <div className="text-gray-400 text-sm font-mono">~/api/contact/README.md</div>
+              <Terminal className="h-4 w-4 text-green-400" />
+            </div>
+          </div>
+
+          <h2 className="text-4xl md:text-5xl font-mono font-bold text-center mb-16 text-red-400">
+            <span className="text-gray-400">// </span>
+            Contact API Documentation
           </h2>
-          
+
           <div className="grid lg:grid-cols-2 gap-8">
-            {/* Contact Information */}
+            {/* Contact Info */}
             <motion.div
               className="space-y-6"
               initial={{ opacity: 0, x: -20 }}
@@ -187,182 +121,218 @@ export const Contact = () => {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.3, delay: 0.1 }}
             >
-              <div className="space-card p-8">
-                <div className="flex items-center mb-6">
-                  <MessageCircle className="h-8 w-8 text-red-400 mr-4" />
-                  <h3 className="text-2xl font-bold text-white">Let's Connect</h3>
+              <div className="bg-gray-900 border border-gray-700 rounded overflow-hidden">
+                <div className="bg-gray-800 px-4 py-2 border-b border-gray-700 flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  </div>
+                  <span className="font-mono text-sm text-gray-300">contact.json</span>
                 </div>
                 
-                <p className="text-gray-300 leading-relaxed mb-8 text-lg">
-                  Ready to explore new <span className="text-red-400 font-semibold">opportunities</span> together? 
-                  Whether you have a project in mind, want to discuss technology, 
-                  or just want to connect, I'd love to hear from you.
-                </p>
-                
-                <div className="space-y-6">
-                  <div className="flex items-center group">
-                    <div className="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center mr-4 
-                                  border border-red-500/50 group-hover:bg-red-500/30 transition-all duration-200">
-                      <Mail className="h-5 w-5 text-red-400" />
+                <div className="p-6">
+                  <div className="bg-black border border-gray-600 rounded p-4 font-mono text-sm mb-6">
+                    <div className="text-gray-500 mb-3">// Contact Information</div>
+                    <div className="space-y-2">
+                      <div>
+                        <span className="text-purple-400">const</span>{" "}
+                        <span className="text-cyan-400">developer</span> = {"{"}
+                      </div>
+                      <div className="ml-4">
+                        <span className="text-green-400">name</span>: <span className="text-yellow-400">"Udit Tewari"</span>,
+                      </div>
+                      <div className="ml-4">
+                        <span className="text-green-400">role</span>: <span className="text-yellow-400">"Full Stack Developer"</span>,
+                      </div>
+                      <div className="ml-4">
+                        <span className="text-green-400">email</span>: <span className="text-yellow-400">"udittewari888@gmail.com"</span>,
+                      </div>
+                      <div className="ml-4">
+                        <span className="text-green-400">location</span>: <span className="text-yellow-400">"India"</span>,
+                      </div>
+                      <div className="ml-4">
+                        <span className="text-green-400">available</span>: <span className="text-cyan-400">true</span>
+                      </div>
+                      <div>{"}"}</div>
                     </div>
-                    <a 
-                      href="mailto:udittewari888@gmail.com" 
-                      className="text-gray-300 hover:text-white transition-colors text-lg"
-                    >
-                      udittewari888@gmail.com
-                    </a>
                   </div>
-                  
-                  <div className="flex gap-4 pt-4">
-                    <a 
-                      href="https://linkedin.com/in/udit-narain-tewari" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-full bg-black/60 border border-red-500/50 flex items-center justify-center 
-                               hover:bg-red-500/20 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/30
-                               transition-all duration-200"
-                      aria-label="LinkedIn Profile"
-                    >
-                      <Linkedin className="h-5 w-5 text-red-400 hover:text-red-300 transition-colors" />
-                    </a>
-                    <a 
-                      href="https://github.com/udit2002-c" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-full bg-black/60 border border-red-500/50 flex items-center justify-center 
-                               hover:bg-red-500/20 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/30
-                               transition-all duration-200"
-                      aria-label="GitHub Profile"
-                    >
-                      <Github className="h-5 w-5 text-red-400 hover:text-red-300 transition-colors" />
-                    </a>
-                  </div>
-                </div>
 
-                {/* Debug button for testing EmailJS */}
-                <div className="mt-8 pt-6 border-t border-red-500/20">
-                  <button
-                    onClick={testEmailJS}
-                    className="text-xs text-red-400 hover:text-red-300 transition-colors underline"
-                  >
-                    Test EmailJS Configuration
-                  </button>
+                  <div className="space-y-4">
+                    <p className="text-gray-300 leading-relaxed font-mono text-sm">
+                      <span className="text-gray-500">// Looking for opportunities to build innovative solutions</span>
+                      <br />
+                      <span className="text-gray-500">// Open to full-time roles, internships, and freelance projects</span>
+                    </p>
+
+                    <div className="space-y-3">
+                      <a
+                        href="mailto:udittewari888@gmail.com"
+                        className="flex items-center p-3 bg-gray-800 border border-gray-600 rounded hover:border-red-400 transition-colors group"
+                      >
+                        <Mail className="h-5 w-5 text-red-400 mr-3" />
+                        <span className="font-mono text-sm text-gray-300 group-hover:text-white">
+                          udittewari888@gmail.com
+                        </span>
+                      </a>
+                      
+                      <a
+                        href="https://github.com/udit2002-c"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center p-3 bg-gray-800 border border-gray-600 rounded hover:border-purple-400 transition-colors group"
+                      >
+                        <Github className="h-5 w-5 text-purple-400 mr-3" />
+                        <span className="font-mono text-sm text-gray-300 group-hover:text-white">
+                          github.com/udit2002-c
+                        </span>
+                      </a>
+                      
+                      <a
+                        href="https://linkedin.com/in/udit-tewari-24b8b3252"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center p-3 bg-gray-800 border border-gray-600 rounded hover:border-blue-400 transition-colors group"
+                      >
+                        <Linkedin className="h-5 w-5 text-blue-400 mr-3" />
+                        <span className="font-mono text-sm text-gray-300 group-hover:text-white">
+                          LinkedIn Profile
+                        </span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
 
             {/* Contact Form */}
             <motion.div
-              className="space-card p-8"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.3, delay: 0.2 }}
             >
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-white mb-3">
-                      Full Name *
-                    </label>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="space-input"
-                      placeholder="Your name"
-                      disabled={isSubmitting}
-                    />
+              <div className="bg-gray-900 border border-gray-700 rounded overflow-hidden">
+                <div className="bg-gray-800 px-4 py-2 border-b border-gray-700 flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   </div>
-                  
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-white mb-3">
-                      Email Address *
-                    </label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="space-input"
-                      placeholder="you@example.com"
-                      disabled={isSubmitting}
-                    />
+                  <span className="font-mono text-sm text-gray-300">POST /api/contact</span>
+                  <Send className="h-4 w-4 text-green-400" />
+                </div>
+                
+                <form onSubmit={handleSubmit} className="p-6 space-y-6">
+                  <div className="bg-black border border-gray-600 rounded p-4 font-mono text-sm mb-4">
+                    <div className="text-gray-500 mb-2">// Request Payload</div>
+                    <div className="text-cyan-400">{"{"}</div>
                   </div>
-                </div>
-                
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-white mb-3">
-                    Subject *
-                  </label>
-                  <input
-                    id="subject"
-                    name="subject"
-                    type="text"
-                    required
-                    value={formData.subject}
-                    onChange={handleChange}
-                    className="space-input"
-                    placeholder="What's this about?"
+
+                  <div className="space-y-4">
+                    <div>
+                      <div className="text-sm font-mono text-gray-400 mb-2">
+                        <span className="text-green-400">"name"</span>: <span className="text-yellow-400">"string"</span>
+                      </div>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded 
+                                 text-white font-mono text-sm placeholder-gray-500
+                                 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent
+                                 transition-all duration-200"
+                        placeholder="Enter your name"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <div className="text-sm font-mono text-gray-400 mb-2">
+                        <span className="text-green-400">"email"</span>: <span className="text-yellow-400">"string"</span>
+                      </div>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded 
+                                 text-white font-mono text-sm placeholder-gray-500
+                                 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent
+                                 transition-all duration-200"
+                        placeholder="your.email@example.com"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <div className="text-sm font-mono text-gray-400 mb-2">
+                        <span className="text-green-400">"subject"</span>: <span className="text-yellow-400">"string"</span>
+                      </div>
+                      <input
+                        type="text"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded 
+                                 text-white font-mono text-sm placeholder-gray-500
+                                 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent
+                                 transition-all duration-200"
+                        placeholder="Project collaboration"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <div className="text-sm font-mono text-gray-400 mb-2">
+                        <span className="text-green-400">"message"</span>: <span className="text-yellow-400">"string"</span>
+                      </div>
+                      <textarea
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        rows={6}
+                        className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded 
+                                 text-white font-mono text-sm placeholder-gray-500 resize-none
+                                 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent
+                                 transition-all duration-200"
+                        placeholder="Hi Udit! I'd love to discuss..."
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="bg-black border border-gray-600 rounded p-4 font-mono text-sm">
+                    <div className="text-cyan-400">{"}"}</div>
+                  </div>
+
+                  <motion.button
+                    type="submit"
                     disabled={isSubmitting}
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-white mb-3">
-                    Message *
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={6}
-                    required
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="space-input resize-none"
-                    placeholder="Tell me about your project or just say hello..."
-                    disabled={isSubmitting}
-                  />
-                </div>
-                
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="space-button-primary w-full group disabled:opacity-50 disabled:cursor-not-allowed"
-                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                >
-                  <div className="flex items-center justify-center">
+                    className={`w-full p-4 rounded font-mono text-sm font-medium transition-all duration-200 
+                              flex items-center justify-center space-x-2 border-2
+                              ${isSubmitting 
+                                ? 'bg-gray-700 border-gray-600 text-gray-400 cursor-not-allowed' 
+                                : 'bg-red-600 border-red-500 text-white hover:bg-red-500 hover:border-red-400'
+                              }`}
+                    whileHover={!isSubmitting ? { scale: 1.02 } : {}}
+                    whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+                  >
                     {isSubmitting ? (
                       <>
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
-                        Sending...
+                        <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                        <span>Sending...</span>
                       </>
                     ) : (
                       <>
-                        Send Message
-                        <Send className="h-5 w-5 ml-3 group-hover:translate-x-1 transition-transform duration-200" />
+                        <Send className="h-4 w-4" />
+                        <span>Execute POST Request</span>
                       </>
                     )}
-                  </div>
-                </motion.button>
-
-                {/* Alternative contact note */}
-                <p className="text-xs text-gray-400 text-center">
-                  Having trouble with the form? Send me an email directly at{" "}
-                  <a 
-                    href="mailto:udittewari888@gmail.com" 
-                    className="text-red-400 hover:text-red-300 transition-colors"
-                  >
-                    udittewari888@gmail.com
-                  </a>
-                </p>
-              </form>
+                  </motion.button>
+                </form>
+              </div>
             </motion.div>
           </div>
         </motion.div>

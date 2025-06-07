@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Github, Play, Zap } from "lucide-react";
+import { ExternalLink, Github, Play, Zap, FileCode, Folder, GitBranch, Star, Eye, Code } from "lucide-react";
 
 interface Project {
   id: number;
@@ -11,6 +11,9 @@ interface Project {
   demo?: string;
   image: string;
   featured?: boolean;
+  language: string;
+  stars?: number;
+  commits?: number;
 }
 
 export const Projects = () => {
@@ -27,7 +30,10 @@ export const Projects = () => {
       ],
       github: "https://github.com/udit2002-c/Journal-App.git",
       image: "https://images.unsplash.com/photo-1517842645767-c639042777db?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-      featured: true
+      featured: true,
+      language: "Java",
+      stars: 12,
+      commits: 45
     },
     {
       id: 2,
@@ -39,7 +45,10 @@ export const Projects = () => {
         "Integrated Open-WebUI and Ollama models for idea generation."
       ],
       github: "https://github.com/udit2002-c/thesis_brainstorming-Group-no.51-",
-      image: "https://images.unsplash.com/photo-1456406644174-8ddd4cd52a06?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+      image: "https://images.unsplash.com/photo-1456406644174-8ddd4cd52a06?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+      language: "Python",
+      stars: 8,
+      commits: 32
     },
     {
       id: 3,
@@ -51,17 +60,15 @@ export const Projects = () => {
         "Designed responsive UI for patients and providers."
       ],
       github: "https://github.com/udit2002-c/Q",
-      image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+      image: "https://images.unsplash.com/photo-1585435557343-3b092031a831?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+      language: "TypeScript",
+      stars: 15,
+      commits: 67
     }
   ];
 
   return (
-    <section id="projects" className="py-20 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-black">
-        <div className="nebula-effect absolute inset-0"></div>
-      </div>
-
+    <section id="projects" className="py-20 relative overflow-hidden bg-black">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -69,162 +76,244 @@ export const Projects = () => {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.4 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-            <span className="text-white">Featured </span>
-            <span className="text-red-400">Projects</span>
+          {/* IDE Window Header */}
+          <div className="max-w-7xl mx-auto mb-8">
+            <div className="bg-gray-800 rounded-t border-b border-gray-600 px-4 py-2 flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              </div>
+              <div className="text-gray-400 text-sm font-mono">~/repositories/projects</div>
+              <div className="flex items-center space-x-2">
+                <GitBranch className="h-4 w-4 text-gray-500" />
+                <span className="text-gray-400 text-xs font-mono">main</span>
+              </div>
+            </div>
+            
+            {/* Repository Navigation */}
+            <div className="bg-gray-800 border-b border-gray-600 flex">
+              <div className="px-4 py-2 bg-gray-700 border-r border-gray-600 text-sm font-mono border-b-2 border-red-400 flex items-center">
+                <Folder className="h-4 w-4 inline mr-2 text-yellow-400" />
+                projects/
+                <div className="ml-2 w-2 h-2 bg-green-400 rounded-full"></div>
+              </div>
+              <div className="px-4 py-2 bg-gray-800 border-r border-gray-600 text-sm font-mono text-gray-400 flex items-center">
+                <FileCode className="h-4 w-4 inline mr-2" />
+                README.md
+              </div>
+              <div className="px-4 py-2 bg-gray-800 border-r border-gray-600 text-sm font-mono text-gray-400 flex items-center">
+                <GitBranch className="h-4 w-4 inline mr-2" />
+                commits
+              </div>
+            </div>
+          </div>
+
+          <h2 className="text-4xl md:text-5xl font-mono font-bold text-center mb-16 text-red-400">
+            <span className="text-gray-400">// </span>
+            Featured Repositories
           </h2>
+
+          {/* GitHub-style Repository List */}
+          <div className="max-w-7xl mx-auto mb-12">
+            <div className="bg-gray-900 border border-gray-700 rounded">
+              <div className="bg-gray-800 px-4 py-2 border-b border-gray-700 flex items-center justify-between">
+                <span className="font-mono text-sm text-gray-300">
+                  <Folder className="h-4 w-4 inline mr-2 text-yellow-400" />
+                  udit2002-c / repositories
+                </span>
+                <div className="flex items-center space-x-4 text-xs text-gray-400">
+                  <span>{projects.length} repositories</span>
+                  <span>Updated recently</span>
+                </div>
+              </div>
+              <div className="divide-y divide-gray-700">
+                {projects.map((project, index) => (
+                  <motion.div
+                    key={project.id}
+                    className="p-4 hover:bg-gray-800 transition-colors cursor-pointer"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ x: 5 }}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <FileCode className="h-4 w-4 text-blue-400" />
+                          <h3 className="font-mono text-blue-400 hover:underline">
+                            {project.title.toLowerCase().replace(/\s+/g, '-')}
+                          </h3>
+                          {project.featured && (
+                            <span className="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs font-mono rounded border border-yellow-500/30">
+                              FEATURED
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-gray-300 text-sm mb-2 font-mono">
+                          {project.description}
+                        </p>
+                        <div className="flex items-center space-x-4 text-xs text-gray-400">
+                          <div className="flex items-center space-x-1">
+                            <div className="w-3 h-3 bg-blue-400 rounded-full"></div>
+                            <span>{project.language}</span>
+                          </div>
+                          <div className="flex items-center space-x-1">
+                            <Star className="h-3 w-3" />
+                            <span>{project.stars}</span>
+                          </div>
+                          <div className="flex items-center space-x-1">
+                            <GitBranch className="h-3 w-3" />
+                            <span>{project.commits} commits</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <motion.a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-1 bg-gray-700 border border-gray-600 rounded text-sm font-mono hover:bg-gray-600 transition-colors"
+                          whileHover={{ scale: 1.05 }}
+                        >
+                          <Github className="h-4 w-4 inline mr-1" />
+                          Code
+                        </motion.a>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {/* Detailed Project Code Views */}
+          <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {projects.map((project, index) => (
               <motion.div
                 key={project.id}
-                className="group relative overflow-hidden"
+                className="bg-gray-900 border border-gray-700 rounded overflow-hidden group"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                whileHover={{ y: -8 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
               >
-                {/* Card with styling */}
-                <div className="relative h-full space-card transition-all duration-300">
-                  {/* Project Image */}
-                  <div className="relative h-48 overflow-hidden rounded-t-xl">
-                    <img 
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
-                    
-                    {/* Floating action buttons */}
-                    <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
+                {/* Code Editor Header */}
+                <div className="bg-gray-800 px-4 py-2 border-b border-gray-700 flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                  </div>
+                  <span className="font-mono text-sm text-gray-300">
+                    {project.title.toLowerCase().replace(/\s+/g, '_')}.{project.language.toLowerCase()}
+                  </span>
+                  <div className="flex items-center space-x-1">
+                    <Eye className="h-4 w-4 text-gray-500" />
+                  </div>
+                </div>
+
+                {/* Project Preview Image as Code Comment */}
+                <div className="relative h-40 bg-black border-b border-gray-700">
+                  <img 
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50"></div>
+                  <div className="absolute top-2 left-2 text-xs font-mono text-gray-400">
+                    // {project.title} - {project.language} Application
+                  </div>
+                </div>
+                
+                {/* Code Content */}
+                <div className="p-4">
+                  {/* Project as Code Block */}
+                  <div className="bg-black border border-gray-600 rounded p-3 font-mono text-sm mb-4">
+                    <div className="text-gray-500 mb-2">// Project Configuration</div>
+                    <div className="space-y-1">
+                      <div>
+                        <span className="text-purple-400">const</span>{" "}
+                        <span className="text-cyan-400">project</span> = {"{"}
+                      </div>
+                      <div className="ml-4">
+                        <span className="text-green-400">name</span>: <span className="text-yellow-400">"{project.title}"</span>,
+                      </div>
+                      <div className="ml-4">
+                        <span className="text-green-400">description</span>: <span className="text-yellow-400">"{project.description}"</span>,
+                      </div>
+                      <div className="ml-4">
+                        <span className="text-green-400">tech_stack</span>: [
+                        <div className="ml-4">
+                          {project.technologies.map((tech, i) => (
+                            <div key={i} className="text-yellow-400">
+                              "{tech}"{i < project.technologies.length - 1 ? ',' : ''}
+                            </div>
+                          ))}
+                        </div>
+                        ],
+                      </div>
+                      <div className="ml-4">
+                        <span className="text-green-400">status</span>: <span className="text-yellow-400">"deployed"</span>
+                      </div>
+                      <div>{"}"}</div>
+                    </div>
+                  </div>
+
+                  {/* Features as Comments */}
+                  <div className="bg-black border border-gray-600 rounded p-3 font-mono text-sm mb-4">
+                    <div className="text-gray-500 mb-2">// Key Features</div>
+                    {project.points.map((point, i) => (
+                      <div key={i} className="text-gray-300 text-xs mb-1">
+                        <span className="text-gray-500">// {i + 1}. </span>
+                        {point}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex space-x-2">
                       <motion.a
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-3 bg-black/60 backdrop-blur-lg rounded-full border border-red-500/40 
-                                 text-red-400 hover:bg-red-500/20 hover:text-red-300 transition-all duration-200"
+                        className="px-3 py-1 bg-gray-700 border border-gray-600 rounded text-xs font-mono hover:bg-gray-600 transition-colors flex items-center"
                         whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
                       >
-                        <Github className="h-4 w-4" />
+                        <Github className="h-3 w-3 mr-1" />
+                        Repository
                       </motion.a>
                       {project.demo && (
                         <motion.a
                           href={project.demo}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-3 bg-black/60 backdrop-blur-lg rounded-full border border-red-500/40 
-                                   text-red-400 hover:bg-red-500/20 hover:text-red-300 transition-all duration-200"
+                          className="px-3 py-1 bg-red-600 border border-red-500 rounded text-xs font-mono hover:bg-red-500 transition-colors flex items-center text-white"
                           whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
                         >
-                          <Play className="h-4 w-4" />
+                          <Play className="h-3 w-3 mr-1" />
+                          Demo
                         </motion.a>
                       )}
                     </div>
-                  </div>
-                  
-                  {/* Project Content */}
-                  <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-red-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-300 mb-4 text-sm leading-relaxed">
-                      {project.description}
-                    </p>
-                    
-                    {/* Technologies */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.technologies.slice(0, 3).map((tech, i) => (
-                        <span 
-                          key={i} 
-                          className="px-3 py-1 bg-red-500/20 text-red-300 text-xs rounded-full 
-                                   border border-red-500/30 font-medium"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.technologies.length > 3 && (
-                        <span className="px-3 py-1 bg-black/40 text-gray-400 text-xs rounded-full border border-red-500/20">
-                          +{project.technologies.length - 3}
-                        </span>
-                      )}
-                    </div>
-                    
-                    {/* Project highlights */}
-                    <div className="flex-1 mb-4">
-                      <ul className="space-y-2 text-sm text-gray-300">
-                        {project.points.slice(0, 2).map((point, i) => (
-                          <li key={i} className="flex items-start">
-                            <span className="w-2 h-2 bg-red-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                            <span>{point}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    {/* Footer with links */}
-                    <div className="flex justify-between items-center pt-4 border-t border-red-500/20">
-                      <div className="flex gap-3">
-                        <motion.a 
-                          href={project.github} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-red-400 hover:text-red-300 transition-colors duration-200"
-                          whileHover={{ scale: 1.05 }}
-                        >
-                          <Github className="h-5 w-5" />
-                        </motion.a>
-                        {project.demo && (
-                          <motion.a 
-                            href={project.demo} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-red-400 hover:text-red-300 transition-colors duration-200"
-                            whileHover={{ scale: 1.05 }}
-                          >
-                            <ExternalLink className="h-5 w-5" />
-                          </motion.a>
-                        )}
+                    <div className="flex items-center space-x-2 text-xs text-gray-400">
+                      <div className="flex items-center space-x-1">
+                        <div className={`w-2 h-2 rounded-full ${
+                          project.language === 'Java' ? 'bg-orange-400' :
+                          project.language === 'Python' ? 'bg-blue-400' :
+                          project.language === 'TypeScript' ? 'bg-blue-600' : 'bg-gray-400'
+                        }`}></div>
+                        <span>{project.language}</span>
                       </div>
-                      <span className="text-xs text-gray-500 flex items-center gap-1">
-                        <Zap className="h-3 w-3" />
-                        {project.technologies.length} tech
-                      </span>
                     </div>
-                  </div>
-
-                  {/* Corner decoration */}
-                  <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-red-500/20 
-                                 border border-red-500/40 flex items-center justify-center animate-pulse">
-                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
-          
-          {/* View More Projects Button */}
-          <motion.div 
-            className="text-center mt-16"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.3 }}
-          >
-            <motion.a 
-              href="https://github.com/udit2002-c" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="space-button-primary group inline-flex items-center"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Github className="h-5 w-5 mr-2" />
-              View More Projects
-            </motion.a>
-          </motion.div>
         </motion.div>
       </div>
     </section>

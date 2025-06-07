@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* Space-themed colors with red accents */
+    /* IDE-themed colors with red accents */
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
 
@@ -33,7 +33,7 @@
     --input: 0 0% 15%;
     --ring: 0 84% 60%;
 
-    --radius: 12px;
+    --radius: 8px;
   }
 }
 
@@ -44,7 +44,7 @@
 
   body {
     @apply bg-black text-white;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
     line-height: 1.5;
     min-height: 100vh;
     background: #000000;
@@ -52,7 +52,7 @@
     overflow-x: hidden;
   }
 
-  /* Starfield Background */
+  /* IDE Grid Background */
   body::before {
     content: "";
     position: fixed;
@@ -60,35 +60,15 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: 
-      radial-gradient(2px 2px at 20px 30px, #fff, transparent),
-      radial-gradient(2px 2px at 40px 70px, #fff, transparent),
-      radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-      radial-gradient(1px 1px at 130px 80px, #fff, transparent),
-      radial-gradient(2px 2px at 160px 30px, #fff, transparent),
-      radial-gradient(1px 1px at 200px 90px, #fff, transparent),
-      radial-gradient(1px 1px at 240px 50px, #fff, transparent),
-      radial-gradient(2px 2px at 280px 20px, #fff, transparent),
-      radial-gradient(1px 1px at 320px 100px, #fff, transparent),
-      radial-gradient(1px 1px at 360px 40px, #fff, transparent),
-      radial-gradient(2px 2px at 400px 80px, #fff, transparent),
-      radial-gradient(1px 1px at 440px 30px, #fff, transparent),
-      radial-gradient(1px 1px at 480px 70px, #fff, transparent),
-      radial-gradient(2px 2px at 520px 10px, #fff, transparent),
-      radial-gradient(1px 1px at 560px 60px, #fff, transparent),
-      radial-gradient(1px 1px at 600px 90px, #fff, transparent),
-      radial-gradient(2px 2px at 640px 40px, #fff, transparent),
-      radial-gradient(1px 1px at 680px 20px, #fff, transparent),
-      radial-gradient(1px 1px at 720px 80px, #fff, transparent),
-      radial-gradient(2px 2px at 760px 50px, #fff, transparent);
-    background-repeat: repeat;
-    background-size: 800px 100px;
-    animation: stars 200s linear infinite;
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
     pointer-events: none;
     z-index: -1;
   }
 
-  /* Blinking stars overlay */
+  /* Subtle code editor ambiance */
   body::after {
     content: "";
     position: fixed;
@@ -97,16 +77,9 @@
     width: 100%;
     height: 100%;
     background: 
-      radial-gradient(1px 1px at 100px 20px, #ef4444, transparent),
-      radial-gradient(1px 1px at 300px 60px, #ef4444, transparent),
-      radial-gradient(1px 1px at 500px 100px, #ef4444, transparent),
-      radial-gradient(1px 1px at 700px 40px, #ef4444, transparent),
-      radial-gradient(1px 1px at 150px 80px, #ef4444, transparent),
-      radial-gradient(1px 1px at 350px 30px, #ef4444, transparent),
-      radial-gradient(1px 1px at 550px 70px, #ef4444, transparent);
-    background-repeat: repeat;
-    background-size: 800px 120px;
-    animation: twinkle 3s ease-in-out infinite alternate;
+      radial-gradient(circle at 20% 80%, rgba(239, 68, 68, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.02) 0%, transparent 50%);
     pointer-events: none;
     z-index: -1;
   }
@@ -118,97 +91,231 @@
   ::selection {
     @apply bg-red-500/30 text-white;
   }
+
+  /* Scrollbar styling for IDE theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1f2937;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #4b5563;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+  }
 }
 
 @layer components {
   .space-card {
-    @apply bg-black/80 border border-red-500/30 rounded-xl shadow-2xl 
-           hover:shadow-red-500/20 hover:border-red-500/50 transition-all duration-300
+    @apply bg-gray-900/90 border border-gray-700 rounded-lg shadow-2xl 
+           hover:shadow-red-500/10 hover:border-gray-600 transition-all duration-300
            backdrop-blur-sm;
-    background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(15,15,15,0.8) 100%);
   }
   
   .space-button-primary {
-    @apply inline-flex items-center justify-center px-8 py-4 text-lg font-semibold
-           bg-gradient-to-r from-red-600 to-red-500 text-white rounded-full
-           shadow-lg shadow-red-500/30 hover:shadow-red-500/50 
-           transition-all duration-300 hover:scale-105
-           border border-red-500/50 hover:border-red-400;
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium font-mono
+           bg-red-600 text-white rounded border border-red-500
+           hover:bg-red-500 hover:border-red-400
+           transition-all duration-200 hover:scale-105;
   }
   
   .space-button-secondary {
-    @apply inline-flex items-center justify-center px-8 py-4 text-lg font-semibold
-           bg-transparent text-red-400 border-2 border-red-500/50 rounded-full
-           hover:bg-red-500/10 hover:border-red-400 hover:text-red-300
-           transition-all duration-300 hover:scale-105;
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-medium font-mono
+           bg-gray-800 text-gray-300 border border-gray-600 rounded
+           hover:bg-gray-700 hover:border-gray-500 hover:text-white
+           transition-all duration-200 hover:scale-105;
   }
   
   .space-title {
-    @apply text-4xl sm:text-5xl md:text-6xl font-bold text-center mb-12
-           bg-gradient-to-r from-white via-red-200 to-red-300 bg-clip-text text-transparent;
+    @apply text-4xl sm:text-5xl md:text-6xl font-bold font-mono text-center mb-12
+           text-red-400;
   }
 
   .cosmic-glow {
-    box-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
   }
 
   .cosmic-border {
-    @apply relative before:absolute before:inset-0 before:p-[1px] before:bg-gradient-to-r 
-           before:from-red-500 before:to-red-600 before:rounded-xl;
+    @apply relative border border-gray-700 rounded;
   }
 
-  .cosmic-border > * {
-    @apply relative bg-black rounded-xl;
+  /* Syntax highlighting colors */
+  .syntax-keyword {
+    @apply text-purple-400;
   }
 
-  @keyframes stars {
-    from { transform: translateY(0px); }
-    to { transform: translateY(-100px); }
+  .syntax-string {
+    @apply text-yellow-400;
   }
 
-  @keyframes twinkle {
-    0%, 100% { opacity: 0; }
-    50% { opacity: 1; }
+  .syntax-property {
+    @apply text-green-400;
   }
 
-  @keyframes pulse-red {
-    0%, 100% { 
-      box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
-      transform: scale(1);
+  .syntax-value {
+    @apply text-cyan-400;
+  }
+
+  .syntax-comment {
+    @apply text-gray-500;
+  }
+
+  /* Terminal cursor animation */
+  @keyframes terminal-cursor {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .animate-terminal-cursor {
+    animation: terminal-cursor 1s infinite;
+  }
+
+  /* Code typing animation */
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  @keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: #ef4444; }
+  }
+
+  .animate-typing {
+    overflow: hidden;
+    border-right: 2px solid #ef4444;
+    white-space: nowrap;
+    margin: 0 auto;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+  }
+
+  /* IDE window styling */
+  .ide-window {
+    @apply bg-gray-900 border border-gray-700 rounded-lg overflow-hidden;
+  }
+
+  .ide-header {
+    @apply bg-gray-800 px-4 py-2 border-b border-gray-700 flex items-center justify-between;
+  }
+
+  .ide-dots {
+    @apply flex items-center space-x-2;
+  }
+
+  .ide-dot {
+    @apply w-3 h-3 rounded-full;
+  }
+
+  .ide-dot-red {
+    @apply bg-red-500;
+  }
+
+  .ide-dot-yellow {
+    @apply bg-yellow-500;
+  }
+
+  .ide-dot-green {
+    @apply bg-green-500;
+  }
+
+  /* File tree styling */
+  .file-tree {
+    @apply bg-gray-900 border border-gray-700 rounded;
+  }
+
+  .file-item {
+    @apply flex items-center p-2 hover:bg-gray-800 cursor-pointer transition-colors;
+  }
+
+  .file-icon {
+    @apply h-4 w-4 mr-2;
+  }
+
+  /* Terminal styling */
+  .terminal {
+    @apply bg-black border border-gray-600 rounded font-mono text-sm;
+  }
+
+  .terminal-header {
+    @apply bg-gray-800 px-4 py-2 border-b border-gray-600 flex items-center space-x-2;
+  }
+
+  .terminal-content {
+    @apply p-4 text-green-400;
+  }
+
+  .terminal-prompt {
+    @apply text-gray-400;
+  }
+
+  .terminal-output {
+    @apply text-cyan-400;
+  }
+
+  /* Badge styling */
+  .badge-featured {
+    @apply px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs font-mono rounded border border-yellow-500/30;
+  }
+
+  .badge-status {
+    @apply px-2 py-1 bg-green-500/20 text-green-400 text-xs font-mono rounded border border-green-500/30;
+  }
+
+  .badge-tech {
+    @apply px-2 py-1 bg-blue-500/20 text-blue-300 text-xs font-mono rounded border border-blue-500/30;
+  }
+
+  /* Animation for elements */
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
     }
-    50% { 
-      box-shadow: 0 0 40px rgba(239, 68, 68, 0.6);
-      transform: scale(1.05);
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
-  @keyframes float-space {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(5deg); }
+  .animate-slide-up {
+    animation: slide-up 0.5s ease-out;
   }
 
-  .animate-pulse-red {
-    animation: pulse-red 2s ease-in-out infinite;
+  /* Hover effects for interactive elements */
+  .hover-glow:hover {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
   }
 
-  .animate-float-space {
-    animation: float-space 6s ease-in-out infinite;
+  /* Focus styles for form elements */
+  .focus-red:focus {
+    @apply outline-none ring-2 ring-red-400 border-transparent;
   }
 
-  .nebula-effect {
-    background: radial-gradient(circle at 30% 20%, rgba(239, 68, 68, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 70% 80%, rgba(239, 68, 68, 0.05) 0%, transparent 50%);
+  /* Code block styling */
+  .code-block {
+    @apply bg-black border border-gray-600 rounded p-4 font-mono text-sm;
   }
 
-  .text-cosmic {
-    @apply bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent;
+  .line-numbers {
+    @apply text-gray-500 select-none mr-4;
   }
 
-  .space-input {
-    @apply w-full px-4 py-3 text-white bg-black/50 border border-red-500/30 rounded-lg 
-           focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 
-           transition-all duration-300 placeholder-gray-400
-           hover:border-red-500/50;
+  /* Responsive font sizes for better mobile experience */
+  @media (max-width: 640px) {
+    .space-title {
+      @apply text-2xl sm:text-3xl;
+    }
+    
+    body {
+      font-size: 14px;
+    }
   }
 }
 
@@ -221,3 +328,4 @@
       linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
   }
 }
+

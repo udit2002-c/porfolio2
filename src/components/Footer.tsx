@@ -1,103 +1,185 @@
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Heart, Zap } from "lucide-react";
+import { Github, Linkedin, Mail, Heart, Zap, Terminal, Server, Cpu, Clock } from "lucide-react";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const buildTime = new Date().toISOString();
   
   return (
-    <footer className="py-16 relative overflow-hidden border-t border-red-500/30">
-      {/* Background */}
-      <div className="absolute inset-0 bg-black">
-        <div className="nebula-effect absolute inset-0"></div>
-      </div>
-
+    <footer className="py-16 relative overflow-hidden border-t border-gray-700 bg-black">
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         <motion.div
-          className="text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.4 }}
         >
-          {/* Brand/Name */}
-          <motion.div 
-            className="mb-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-          >
-            <h3 className="text-3xl font-bold mb-3">
-              <span className="text-white">
-                Udit Narain Tewari
-              </span>
-            </h3>
-            <p className="text-gray-300 text-lg">
-              <span className="text-red-400">Full Stack Developer</span> | <span className="text-red-400">Software Engineer</span> | <span className="text-red-400">Tech Enthusiast</span>
-            </p>
-          </motion.div>
-          
-          {/* Social Links */}
-          <motion.div 
-            className="flex justify-center space-x-4 mb-8"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
-          >
-            <motion.a 
-              href="https://linkedin.com/in/udit-narain-tewari" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="w-14 h-14 rounded-full bg-black/60 border border-red-500/50 flex items-center justify-center 
-                       hover:bg-red-500/20 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/30
-                       transition-all duration-200 group"
-              aria-label="LinkedIn Profile"
-              whileHover={{ scale: 1.05, y: -1 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Linkedin className="h-6 w-6 text-red-400 group-hover:text-red-300 transition-colors" />
-            </motion.a>
-            <motion.a 
-              href="https://github.com/udit2002-c" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="w-14 h-14 rounded-full bg-black/60 border border-red-500/50 flex items-center justify-center 
-                       hover:bg-red-500/20 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/30
-                       transition-all duration-200 group"
-              aria-label="GitHub Profile"
-              whileHover={{ scale: 1.05, y: -1 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Github className="h-6 w-6 text-red-400 group-hover:text-red-300 transition-colors" />
-            </motion.a>
-            <motion.a 
-              href="mailto:udittewari888@gmail.com"
-              className="w-14 h-14 rounded-full bg-black/60 border border-red-500/50 flex items-center justify-center 
-                       hover:bg-red-500/20 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/30
-                       transition-all duration-200 group"
-              aria-label="Email Contact"
-              whileHover={{ scale: 1.05, y: -1 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Mail className="h-6 w-6 text-red-400 group-hover:text-red-300 transition-colors" />
-            </motion.a>
-          </motion.div>
-          
-          {/* Copyright and Tech Stack */}
-          <motion.div 
-            className="space-y-4"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: 0.3 }}
-          >
-            <div className="w-full h-px bg-gradient-to-r from-transparent via-red-500/30 to-transparent"></div>
-            
-            <div className="text-gray-400 space-y-3">
-              <p className="text-sm">
-                © {currentYear} Udit Narain Tewari. All rights reserved.
-              </p>
-              
+          {/* Terminal Footer */}
+          <div className="bg-gray-900 border border-gray-700 rounded overflow-hidden">
+            {/* Terminal Header */}
+            <div className="bg-gray-800 px-4 py-2 border-b border-gray-700 flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              </div>
+              <div className="text-gray-400 text-sm font-mono">~/portfolio $ system status</div>
+              <Terminal className="h-4 w-4 text-green-400" />
             </div>
-          </motion.div>
+
+            <div className="p-6">
+              <div className="grid lg:grid-cols-3 gap-6">
+                {/* System Information */}
+                <motion.div
+                  className="bg-black border border-gray-600 rounded p-4 font-mono text-sm"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <div className="text-gray-500 mb-3">// System Information</div>
+                  <div className="space-y-2">
+                    <div>
+                      <span className="text-green-400">Developer</span>: <span className="text-yellow-400">"Udit Narain Tewari"</span>
+                    </div>
+                    <div>
+                      <span className="text-green-400">Role</span>: <span className="text-yellow-400">"Full Stack Developer"</span>
+                    </div>
+                    <div>
+                      <span className="text-green-400">Version</span>: <span className="text-cyan-400">v2.0.0</span>
+                    </div>
+                    <div>
+                      <span className="text-green-400">Status</span>: <span className="text-green-400">🟢 Online</span>
+                    </div>
+                    <div>
+                      <span className="text-green-400">Build</span>: <span className="text-cyan-400">{buildTime.substring(0, 10)}</span>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Build Information */}
+                <motion.div
+                  className="bg-black border border-gray-600 rounded p-4 font-mono text-sm"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <div className="text-gray-500 mb-3">// Build Configuration</div>
+                  <div className="space-y-2">
+                    <div>
+                      <span className="text-green-400">Framework</span>: <span className="text-yellow-400">"React + TypeScript"</span>
+                    </div>
+                    <div>
+                      <span className="text-green-400">Styling</span>: <span className="text-yellow-400">"Tailwind CSS"</span>
+                    </div>
+                    <div>
+                      <span className="text-green-400">Animation</span>: <span className="text-yellow-400">"Framer Motion"</span>
+                    </div>
+                    <div>
+                      <span className="text-green-400">Deployment</span>: <span className="text-cyan-400">Vercel</span>
+                    </div>
+                    <div>
+                      <span className="text-green-400">Build_Time</span>: <span className="text-cyan-400">~30s</span>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Connection Links */}
+                <motion.div
+                  className="bg-black border border-gray-600 rounded p-4 font-mono text-sm"
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <div className="text-gray-500 mb-3">// Connection Links</div>
+                  <div className="space-y-3">
+                    <motion.a
+                      href="https://github.com/udit2002-c"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between p-2 border border-gray-600 rounded hover:border-purple-400 transition-colors group"
+                      whileHover={{ x: 5 }}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <Github className="h-4 w-4 text-purple-400" />
+                        <span className="text-gray-300 group-hover:text-white">GitHub</span>
+                      </div>
+                      <span className="text-gray-500 text-xs">→</span>
+                    </motion.a>
+                    
+                    <motion.a
+                      href="https://linkedin.com/in/udit-tewari-24b8b3252"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between p-2 border border-gray-600 rounded hover:border-blue-400 transition-colors group"
+                      whileHover={{ x: 5 }}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <Linkedin className="h-4 w-4 text-blue-400" />
+                        <span className="text-gray-300 group-hover:text-white">LinkedIn</span>
+                      </div>
+                      <span className="text-gray-500 text-xs">→</span>
+                    </motion.a>
+                    
+                    <motion.a
+                      href="mailto:udittewari888@gmail.com"
+                      className="flex items-center justify-between p-2 border border-gray-600 rounded hover:border-red-400 transition-colors group"
+                      whileHover={{ x: 5 }}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <Mail className="h-4 w-4 text-red-400" />
+                        <span className="text-gray-300 group-hover:text-white">Email</span>
+                      </div>
+                      <span className="text-gray-500 text-xs">→</span>
+                    </motion.a>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Terminal Output Footer */}
+              <motion.div
+                className="mt-6 bg-black border border-gray-600 rounded p-4 font-mono text-sm"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
+                <div className="space-y-2">
+                  <div className="text-green-400">$ echo "Portfolio build completed successfully"</div>
+                  <div className="text-cyan-400">Portfolio build completed successfully</div>
+                  
+                  <div className="text-green-400 mt-3">$ uptime</div>
+                  <div className="text-cyan-400">System online since {currentYear} • Available 24/7 • Ready for new opportunities</div>
+                  
+                  <div className="text-green-400 mt-3">$ whoami</div>
+                  <div className="text-cyan-400">Passionate developer building the future, one line of code at a time</div>
+                  
+                  <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-1">
+                        <Server className="h-3 w-3" />
+                        <span>Deployed on Vercel</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Cpu className="h-3 w-3" />
+                        <span>Edge Functions</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Clock className="h-3 w-3" />
+                        <span>Built {buildTime.substring(0, 10)}</span>
+                      </div>
+                    </div>
+                    <div className="text-gray-400">
+                      © {currentYear} • MIT License • Made with <Heart className="h-3 w-3 inline text-red-400" /> by Udit
+                    </div>
+                  </div>
+                  
+                  <div className="text-gray-400 animate-pulse mt-2">█</div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </footer>

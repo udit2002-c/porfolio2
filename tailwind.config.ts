@@ -18,6 +18,25 @@ export default {
       }
     },
     extend: {
+      fontFamily: {
+        'mono': [
+          'JetBrains Mono',
+          'Fira Code',
+          'Monaco',
+          'Cascadia Code',
+          'Roboto Mono',
+          'Consolas',
+          'Courier New',
+          'monospace'
+        ],
+        'code': [
+          'JetBrains Mono',
+          'Fira Code',
+          'Monaco',
+          'Cascadia Code',
+          'monospace'
+        ]
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -62,11 +81,20 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))'
         },
-        // Sci-fi theme colors
-        neon: {
-          red: '#FF4500', // Bright red for neon effect
-          darkred: '#8B0000', // Dark red for contrast
-          crimson: '#DC143C', // Vibrant crimson
+        // IDE theme colors
+        ide: {
+          primary: '#66d9ef',    // Cyan
+          secondary: '#a6e22e',  // Green
+          accent: '#f92672',     // Pink/Red
+          warning: '#fd971f',    // Orange
+          comment: '#75715e',    // Gray
+          string: '#e6db74',     // Yellow
+          keyword: '#f92672',    // Pink
+          function: '#66d9ef',   // Cyan
+          variable: '#fd971f',   // Orange
+          background: '#1e1e1e', // Dark gray
+          surface: '#2d3748',    // Medium gray
+          border: '#4a5568'      // Light gray
         }
       },
       borderRadius: {
@@ -119,6 +147,14 @@ export default {
         'pulse': {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.5' }
+        },
+        'typing': {
+          'from': { width: '0' },
+          'to': { width: '100%' }
+        },
+        'blink-cursor': {
+          '0%, 50%': { borderColor: 'transparent' },
+          '51%, 100%': { borderColor: '#66d9ef' }
         }
       },
       animation: {
@@ -132,12 +168,15 @@ export default {
         'slide-out-right': 'slide-out-right 0.3s ease-out',
         'slide-in-bottom': 'slide-in-bottom 0.5s ease-out',
         'glow': 'glow 2s ease-in-out infinite',
-        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'typing': 'typing 3s steps(40, end)',
+        'blink': 'blink-cursor 1s step-end infinite'
       },
       backgroundImage: {
-        'space-gradient': 'linear-gradient(to bottom, #0d1117, #161b22)',
-        'sci-fi-grid': 'radial-gradient(circle, rgba(30, 41, 59, 0.4) 1px, transparent 1px)',
-        'hero-pattern': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Cg fill-rule=\'evenodd\'%3E%3Cg fill=\'%238B5CF6\' fill-opacity=\'0.05\'%3E%3Cpath opacity=\'.5\' d=\'M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")'
+        'ide-gradient': 'linear-gradient(135deg, #1e1e1e 0%, #2d3748 25%, #1a202c 50%, #2d3748 75%, #1e1e1e 100%)',
+        'code-grid': 'radial-gradient(circle, rgba(75, 85, 99, 0.4) 1px, transparent 1px)',
+        'terminal-gradient': 'linear-gradient(to bottom, #0d1117, #161b22)',
+        'syntax-highlight': 'linear-gradient(90deg, rgba(102, 217, 239, 0.1) 0%, transparent 100%)'
       }
     }
   },
