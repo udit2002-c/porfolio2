@@ -110,7 +110,7 @@ export const Footer = () => {
                     </motion.a>
                     
                     <motion.a
-                      href="https://linkedin.com/in/udit-tewari-24b8b3252"
+                      href="https://www.linkedin.com/in/udit-narain-tewari"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-between p-2 border border-gray-600 rounded hover:border-blue-400 transition-colors group"

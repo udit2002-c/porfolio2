@@ -274,7 +274,7 @@ The portfolio is fully responsive with special mobile optimizations:
 ### **Connect with Me**
 - 📧 Email: [udittewari888@gmail.com](mailto:udittewari888@gmail.com)
 - 🐙 GitHub: [udit-in](https://github.com/udit-in)
-- 💼 LinkedIn: [udit-tewari-24b8b3252](https://linkedin.com/in/udit-tewari-24b8b3252)
+- 💼 LinkedIn: [udit-tewari-24b8b3252](https://www.linkedin.com/in/udit-narain-tewari)
 - 📱 Phone: +91-8887547458
 
 ## 📄 License
