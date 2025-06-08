@@ -252,7 +252,7 @@ export const Hero = () => {
                   GitHub
                 </motion.a>
                 <motion.a 
-                  href="https://linkedin.com/in/udit-tewari-24b8b3252https://www.linkedin.com/in/udit-narain-tewari" 
+                  href="https://www.linkedin.com/in/udit-narain-tewari" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
