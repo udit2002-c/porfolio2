@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   Menu, X, FileCode, Terminal, Folder, Settings, GitBranch, 
   Search, Bell, User, ChevronDown, Play, Square, Monitor,
-  Maximize, Minimize, Coffee, Globe, Zap, Activity, ArrowRight
+  Maximize, Minimize, Coffee, Globe, Zap, Activity, ArrowRight, Trophy
 } from "lucide-react";
 
 const IDENavLink = ({ href, label, icon: Icon, onClick, isActive, hasUnsavedChanges }: { 
@@ -548,417 +548,248 @@ const SearchModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
 };
 
 export const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
-  const [isRunning, setIsRunning] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [searchOpen, setSearchOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
   const [terminalOpen, setTerminalOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-      
-      // Update active section based on scroll position
       const sections = ['hero', 'about', 'experience', 'projects', 'skills', 'achievements', 'contact'];
-      const current = sections.find(section => {
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 150 && rect.bottom >= 150;
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
         }
-        return false;
-      });
-      if (current) setActiveSection(current);
+      }
+
+      setIsScrolled(window.scrollY > 50);
     };
 
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+      if (e.ctrlKey && e.key === 'k') {
         e.preventDefault();
         setSearchOpen(true);
-      }
-      if ((e.ctrlKey || e.metaKey) && e.key === '`') {
+      } else if (e.ctrlKey && e.key === 'j') {
         e.preventDefault();
         setTerminalOpen(true);
+      } else if (e.key === 'Escape') {
+        setSearchOpen(false);
+        setTerminalOpen(false);
+        setMobileMenuOpen(false);
       }
     };
 
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("keydown", handleKeyDown);
-      clearInterval(timer);
-    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const closeMenu = () => setMobileMenuOpen(false);
 
   const runPortfolio = () => {
-    setIsRunning(true);
-    setTimeout(() => setIsRunning(false), 3000);
+    const element = document.getElementById('hero');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    closeMenu();
   };
 
   return (
     <>
-      <motion.header
-        className="fixed top-0 left-0 right-0 z-50 bg-gray-900/98 backdrop-blur-lg border-b border-gray-700"
+      <motion.nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-gray-900/95 backdrop-blur-sm shadow-lg' : 'bg-transparent'
+        }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {/* VS Code-style Title Bar */}
-        <div className="bg-gray-800 border-b border-gray-700 px-4 py-1 flex items-center justify-between text-sm">
-          <div className="flex items-center space-x-4">
-            {/* Window Controls */}
-            <div className="flex items-center space-x-2">
-              <motion.button 
-                className="w-3 h-3 bg-red-500 rounded-full hover:bg-red-400 transition-colors" 
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              />
-              <motion.button 
-                className="w-3 h-3 bg-yellow-500 rounded-full hover:bg-yellow-400 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              />
-              <motion.button 
-                className="w-3 h-3 bg-green-500 rounded-full hover:bg-green-400 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              />
-            </div>
-
-            {/* Application Title */}
-            <div className="font-mono text-gray-400 text-xs">
-              Udit's Portfolio - Visual Studio Code
-            </div>
-          </div>
-
-          {/* Title Bar Controls */}
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center space-x-2 text-xs text-gray-500">
-              <Activity size={12} className={isRunning ? "text-green-400" : ""} />
-              <span>{isRunning ? 'Running...' : 'Ready'}</span>
-            </div>
-
-            <div className="flex items-center space-x-1 text-xs text-gray-500">
-              <span>{currentTime.toLocaleTimeString()}</span>
-            </div>
-
-            <div className="flex items-center space-x-1">
-              <motion.button 
-                className="p-1 hover:bg-gray-700 rounded"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Minimize size={12} className="text-gray-400" />
-              </motion.button>
-              <motion.button 
-                className="p-1 hover:bg-gray-700 rounded"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <Maximize size={12} className="text-gray-400" />
-              </motion.button>
-              <motion.button 
-                className="p-1 hover:bg-red-600 rounded"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <X size={12} className="text-gray-400 hover:text-white" />
-              </motion.button>
-            </div>
-          </div>
-        </div>
-
-        {/* Menu Bar */}
-        <div className="bg-gray-800 border-b border-gray-700 px-4 py-1">
-          <div className="flex items-center space-x-1">
-            <IDEMenuDropdown title="File" icon={FileCode}>
-              <DropdownItem onClick={() => {}} shortcut="Ctrl+N">New File</DropdownItem>
-              <DropdownItem onClick={() => {}} shortcut="Ctrl+O">Open File...</DropdownItem>
-              <DropdownItem onClick={() => {}} shortcut="Ctrl+S">Save</DropdownItem>
-              <DropdownItem onClick={() => {}} shortcut="Ctrl+Shift+S">Save All</DropdownItem>
-            </IDEMenuDropdown>
-
-            <IDEMenuDropdown title="View" icon={Monitor}>
-              <DropdownItem onClick={() => document.getElementById('hero')?.scrollIntoView()}>Go to Hero</DropdownItem>
-              <DropdownItem onClick={() => document.getElementById('projects')?.scrollIntoView()}>Show Projects</DropdownItem>
-              <DropdownItem onClick={() => document.getElementById('contact')?.scrollIntoView()}>Open Contact</DropdownItem>
-            </IDEMenuDropdown>
-
-            <IDEMenuDropdown title="Terminal" icon={Terminal}>
-              <DropdownItem onClick={() => setTerminalOpen(true)} shortcut="Ctrl+`">New Terminal</DropdownItem>
-              <DropdownItem onClick={runPortfolio}>Run Portfolio</DropdownItem>
-              <DropdownItem onClick={() => setTerminalOpen(true)}>Open Terminal</DropdownItem>
-            </IDEMenuDropdown>
-
-            <IDEMenuDropdown title="Help" icon={Coffee}>
-              <DropdownItem onClick={() => window.open('https://github.com/udit2002-c', '_blank')}>GitHub Profile</DropdownItem>
-              <DropdownItem onClick={() => {}}>About Portfolio</DropdownItem>
-              <DropdownItem onClick={() => {}}>Documentation</DropdownItem>
-            </IDEMenuDropdown>
-          </div>
-        </div>
-
-        {/* Main Navigation */}
-        <div className="container mx-auto flex justify-between items-center max-w-7xl px-4 py-2">
-          <div className="flex items-center w-full">
-            {/* Project Explorer & Logo */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
             <motion.div 
-              className="flex items-center space-x-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
+              className="flex items-center"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <div className="flex items-center space-x-2 px-3 py-1 bg-gray-800 rounded border border-gray-600">
-                <Folder size={16} className="text-blue-400" />
-                <span className="font-mono text-sm text-gray-300">~/portfolio</span>
-              </div>
-
-              <motion.button
-                onClick={runPortfolio}
-                className={`flex items-center space-x-2 px-3 py-1 rounded border transition-all duration-300 ${
-                  isRunning 
-                    ? 'bg-red-600 border-red-500 text-white' 
-                    : 'bg-green-600 border-green-500 text-white hover:bg-green-500'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                disabled={isRunning}
-              >
-                {isRunning ? (
-                  <>
-                    <Square size={12} />
-                    <span className="font-mono text-xs">Stop</span>
-                  </>
-                ) : (
-                  <>
-                    <Play size={12} />
-                    <span className="font-mono text-xs">Run</span>
-                  </>
-                )}
-              </motion.button>
+              <a href="#hero" className="flex items-center space-x-2">
+                <FileCode className="h-6 w-6 text-cyan-400" />
+                <span className="text-white font-mono text-sm sm:text-base">portfolio.dev</span>
+              </a>
             </motion.div>
 
-            {/* File Tabs */}
-            <div className="hidden md:flex items-center ml-6 bg-gray-800 rounded border border-gray-600 overflow-hidden">
-              <IDENavLink 
-                href="#hero" 
-                label="main.tsx" 
-                icon={FileCode} 
-                isActive={activeSection === 'hero'}
-                hasUnsavedChanges={false}
-              />
-              <IDENavLink 
-                href="#about" 
-                label="about.ts" 
-                icon={FileCode} 
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-1">
+              <IDENavLink
+                href="#about"
+                label="About"
+                icon={User}
                 isActive={activeSection === 'about'}
-                hasUnsavedChanges={true}
               />
-              <IDENavLink 
-                href="#experience" 
-                label="experience.json" 
-                icon={FileCode} 
+              <IDENavLink
+                href="#experience"
+                label="Experience"
+                icon={Activity}
                 isActive={activeSection === 'experience'}
               />
-              <IDENavLink 
-                href="#projects" 
-                label="projects/" 
-                icon={Folder} 
+              <IDENavLink
+                href="#projects"
+                label="Projects"
+                icon={Folder}
                 isActive={activeSection === 'projects'}
               />
-              <IDENavLink 
-                href="#skills" 
-                label="skills.js" 
-                icon={FileCode} 
+              <IDENavLink
+                href="#skills"
+                label="Skills"
+                icon={Zap}
                 isActive={activeSection === 'skills'}
               />
-              <IDENavLink 
-                href="#achievements" 
-                label="achievements.md" 
-                icon={FileCode} 
+              <IDENavLink
+                href="#achievements"
+                label="Achievements"
+                icon={Trophy}
                 isActive={activeSection === 'achievements'}
               />
-              <IDENavLink 
-                href="#contact" 
-                label="contact.ts" 
-                icon={FileCode} 
+              <IDENavLink
+                href="#contact"
+                label="Contact"
+                icon={Globe}
                 isActive={activeSection === 'contact'}
               />
             </div>
 
-            {/* Status Bar Items */}
-            <div className="hidden lg:flex items-center ml-auto space-x-3">
-              <motion.button 
-                className="flex items-center space-x-2 px-3 py-1 bg-gray-800 rounded border border-gray-600 hover:bg-gray-700 transition-all duration-300"
+            {/* Desktop Actions */}
+            <div className="hidden md:flex items-center space-x-2">
+              <motion.button
                 onClick={() => setSearchOpen(true)}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className="p-2 text-gray-400 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
-                <Search size={14} className="text-gray-400" />
-                <span className="font-mono text-xs text-gray-400">Search</span>
-                <span className="font-mono text-xs text-gray-500">Ctrl+P</span>
+                <Search className="h-4 w-4" />
               </motion.button>
-
-              <motion.div 
-                className="flex items-center space-x-2 px-3 py-1 bg-gray-800 rounded border border-gray-600"
-                whileHover={{ scale: 1.02 }}
-              >
-                <GitBranch size={14} className="text-green-400" />
-                <span className="font-mono text-xs text-gray-400">main</span>
-                <Zap size={12} className="text-yellow-400" />
-              </motion.div>
-              
-              <motion.div 
-                className="flex items-center space-x-2 px-3 py-1 bg-gray-800 rounded border border-gray-600"
-                whileHover={{ scale: 1.02 }}
-              >
-                <Globe size={14} className="text-blue-400" />
-                <span className="font-mono text-xs text-gray-400">Live</span>
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              </motion.div>
-
               <motion.button
-                className="p-2 text-gray-400 hover:text-cyan-400 hover:bg-gray-800 transition-all duration-300 rounded border border-gray-600"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                onClick={() => setTerminalOpen(true)}
+                className="p-2 text-gray-400 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
-                <Bell size={14} />
-              </motion.button>
-
-              <motion.button
-                className="p-2 text-gray-400 hover:text-cyan-400 hover:bg-gray-800 transition-all duration-300 rounded border border-gray-600"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <User size={14} />
+                <Terminal className="h-4 w-4" />
               </motion.button>
             </div>
-          </div>
 
-          {/* Mobile Menu Toggle */}
-          <motion.button
-            className="md:hidden p-2 text-gray-300 hover:text-cyan-400 transition-colors duration-300 
-                       rounded bg-gray-800 border border-gray-600"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-            whileTap={{ scale: 0.95 }}
-            whileHover={{ scale: 1.05 }}
-          >
-            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
-          </motion.button>
+            {/* Mobile Menu Button */}
+            <motion.button
+              className="md:hidden p-2 text-gray-400 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </motion.button>
+          </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Menu */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
-              className="fixed inset-0 z-40 md:hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              className="md:hidden bg-gray-900 border-t border-gray-700"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
             >
-              <div className="absolute inset-0 bg-black/90 backdrop-blur-md" />
-              
-              <motion.div
-                className="relative min-h-screen flex flex-col bg-gray-900 border-r border-gray-700 max-w-sm"
-                initial={{ x: -300 }}
-                animate={{ x: 0 }}
-                exit={{ x: -300 }}
-                transition={{ duration: 0.3 }}
-              >
-                {/* Mobile Header */}
-                <div className="bg-gray-800 border-b border-gray-700 px-4 py-3 flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <Terminal size={16} className="text-cyan-400" />
-                    <span className="font-mono text-sm text-gray-300">Portfolio Explorer</span>
-                  </div>
-                  <motion.button
-                    onClick={closeMenu}
-                    className="p-1 hover:bg-gray-700 rounded"
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <X size={16} className="text-gray-400" />
-                  </motion.button>
-                </div>
-
-                {/* Mobile Search */}
-                <div className="p-4 border-b border-gray-700">
-                  <motion.button
-                    onClick={() => {
-                      setSearchOpen(true);
-                      closeMenu();
-                    }}
-                    className="w-full flex items-center space-x-2 px-3 py-2 bg-gray-800 border border-gray-600 rounded hover:bg-gray-700 transition-all duration-300"
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Search size={14} className="text-gray-400" />
-                    <span className="font-mono text-sm text-gray-400">Search portfolio...</span>
-                  </motion.button>
-                </div>
-
-                {/* File Tree */}
-                <div className="flex-1 p-4">
-                  <div className="font-mono text-xs text-gray-500 mb-4 flex items-center">
-                    <Folder size={12} className="mr-1" />
-                    ~/portfolio
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <IDENavLink href="#hero" label="main.tsx" icon={FileCode} onClick={closeMenu} isActive={activeSection === 'hero'} />
-                    <IDENavLink href="#about" label="about.ts" icon={FileCode} onClick={closeMenu} isActive={activeSection === 'about'} hasUnsavedChanges={true} />
-                    <IDENavLink href="#experience" label="experience.json" icon={FileCode} onClick={closeMenu} isActive={activeSection === 'experience'} />
-                    <IDENavLink href="#projects" label="projects/" icon={Folder} onClick={closeMenu} isActive={activeSection === 'projects'} />
-                    <IDENavLink href="#skills" label="skills.js" icon={FileCode} onClick={closeMenu} isActive={activeSection === 'skills'} />
-                    <IDENavLink href="#achievements" label="achievements.md" icon={FileCode} onClick={closeMenu} isActive={activeSection === 'achievements'} />
-                    <IDENavLink href="#contact" label="contact.ts" icon={FileCode} onClick={closeMenu} isActive={activeSection === 'contact'} />
-                  </div>
-
-                  {/* Terminal Section */}
-                  <div className="mt-8 p-4 bg-gray-800 rounded border border-gray-600">
-                    <div className="font-mono text-xs text-gray-500 mb-2">TERMINAL</div>
-                    <div className="font-mono text-xs text-gray-400 space-y-1">
-                      <div className="text-green-400">$ npm start</div>
-                      <div>Portfolio server running...</div>
-                      <div className="flex items-center">
-                        <span className="text-cyan-400">➜</span>
-                        <span className="ml-2">http://localhost:3000</span>
-                      </div>
-                      <div className="flex items-center">
-                        <span className="animate-pulse">▊</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Git Status */}
-                  <div className="mt-4 p-4 bg-gray-800 rounded border border-gray-600">
-                    <div className="font-mono text-xs text-gray-500 mb-2">GIT STATUS</div>
-                    <div className="font-mono text-xs text-gray-400 space-y-1">
-                      <div className="flex items-center">
-                        <GitBranch size={10} className="text-green-400 mr-1" />
-                        <span>main</span>
-                      </div>
-                      <div className="text-green-400">✓ All changes committed</div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+              <div className="px-2 pt-2 pb-3 space-y-1">
+                <motion.a
+                  href="#about"
+                  className="block px-3 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
+                  onClick={closeMenu}
+                  whileHover={{ x: 5 }}
+                >
+                  About
+                </motion.a>
+                <motion.a
+                  href="#experience"
+                  className="block px-3 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
+                  onClick={closeMenu}
+                  whileHover={{ x: 5 }}
+                >
+                  Experience
+                </motion.a>
+                <motion.a
+                  href="#projects"
+                  className="block px-3 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
+                  onClick={closeMenu}
+                  whileHover={{ x: 5 }}
+                >
+                  Projects
+                </motion.a>
+                <motion.a
+                  href="#skills"
+                  className="block px-3 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
+                  onClick={closeMenu}
+                  whileHover={{ x: 5 }}
+                >
+                  Skills
+                </motion.a>
+                <motion.a
+                  href="#achievements"
+                  className="block px-3 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
+                  onClick={closeMenu}
+                  whileHover={{ x: 5 }}
+                >
+                  Achievements
+                </motion.a>
+                <motion.a
+                  href="#contact"
+                  className="block px-3 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
+                  onClick={closeMenu}
+                  whileHover={{ x: 5 }}
+                >
+                  Contact
+                </motion.a>
+                <div className="border-t border-gray-700 my-2"></div>
+                <motion.button
+                  onClick={() => {
+                    setSearchOpen(true);
+                    closeMenu();
+                  }}
+                  className="w-full text-left px-3 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
+                  whileHover={{ x: 5 }}
+                >
+                  Search (⌘K)
+                </motion.button>
+                <motion.button
+                  onClick={() => {
+                    setTerminalOpen(true);
+                    closeMenu();
+                  }}
+                  className="w-full text-left px-3 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
+                  whileHover={{ x: 5 }}
+                >
+                  Terminal (⌘J)
+                </motion.button>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.header>
+      </motion.nav>
 
-      {/* Search Modal */}
+      {/* Modals */}
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-      
-      {/* Terminal Modal */}
       <TerminalModal isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
     </>
   );
