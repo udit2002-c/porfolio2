@@ -3,7 +3,7 @@ import { Mail, Phone, MapPin, GraduationCap, FileCode, User, BookOpen, Calendar,
 
 export const About = () => {
   return (
-    <section id="about" className="py-12 sm:py-20 relative overflow-hidden bg-black">
+    <section id="about" className="pt-20 pb-12 sm:pt-24 sm:pb-20 relative overflow-hidden bg-black">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

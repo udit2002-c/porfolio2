@@ -579,10 +579,10 @@ export const Navbar = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === 'k') {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
         setSearchOpen(true);
-      } else if (e.ctrlKey && e.key === 'j') {
+      } else if ((e.ctrlKey || e.metaKey) && (e.key === 'j' || e.key === '`')) {
         e.preventDefault();
         setTerminalOpen(true);
       } else if (e.key === 'Escape') {
@@ -621,8 +621,8 @@ export const Navbar = () => {
             {/* Logo */}
             <motion.div 
               className="flex items-center"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
             >
               <a href="#hero" className="flex items-center space-x-2">
                 <FileCode className="h-6 w-6 text-cyan-400" />
@@ -632,38 +632,38 @@ export const Navbar = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-1">
-              <IDENavLink
-                href="#about"
+              <IDENavLink 
+                href="#about" 
                 label="About"
                 icon={User}
                 isActive={activeSection === 'about'}
               />
-              <IDENavLink
-                href="#experience"
+              <IDENavLink 
+                href="#experience" 
                 label="Experience"
                 icon={Activity}
                 isActive={activeSection === 'experience'}
               />
-              <IDENavLink
-                href="#projects"
+              <IDENavLink 
+                href="#projects" 
                 label="Projects"
-                icon={Folder}
+                icon={Folder} 
                 isActive={activeSection === 'projects'}
               />
-              <IDENavLink
-                href="#skills"
+              <IDENavLink 
+                href="#skills" 
                 label="Skills"
                 icon={Zap}
                 isActive={activeSection === 'skills'}
               />
-              <IDENavLink
-                href="#achievements"
+              <IDENavLink 
+                href="#achievements" 
                 label="Achievements"
                 icon={Trophy}
                 isActive={activeSection === 'achievements'}
               />
-              <IDENavLink
-                href="#contact"
+              <IDENavLink 
+                href="#contact" 
                 label="Contact"
                 icon={Globe}
                 isActive={activeSection === 'contact'}
@@ -672,7 +672,7 @@ export const Navbar = () => {
 
             {/* Desktop Actions */}
             <div className="hidden md:flex items-center space-x-2">
-              <motion.button
+              <motion.button 
                 onClick={() => setSearchOpen(true)}
                 className="p-2 text-gray-400 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
                 whileHover={{ scale: 1.1 }}
@@ -688,17 +688,17 @@ export const Navbar = () => {
               >
                 <Terminal className="h-4 w-4" />
               </motion.button>
-            </div>
+          </div>
 
             {/* Mobile Menu Button */}
-            <motion.button
+          <motion.button
               className="md:hidden p-2 text-gray-400 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-            >
+          >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </motion.button>
+          </motion.button>
           </div>
         </div>
 
@@ -724,7 +724,7 @@ export const Navbar = () => {
                 <motion.a
                   href="#experience"
                   className="block px-3 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
-                  onClick={closeMenu}
+                    onClick={closeMenu}
                   whileHover={{ x: 5 }}
                 >
                   Experience
@@ -734,7 +734,7 @@ export const Navbar = () => {
                   className="block px-3 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
                   onClick={closeMenu}
                   whileHover={{ x: 5 }}
-                >
+                  >
                   Projects
                 </motion.a>
                 <motion.a
@@ -762,7 +762,7 @@ export const Navbar = () => {
                   Contact
                 </motion.a>
                 <div className="border-t border-gray-700 my-2"></div>
-                <motion.button
+                                  <motion.button
                   onClick={() => {
                     setSearchOpen(true);
                     closeMenu();
@@ -780,9 +780,9 @@ export const Navbar = () => {
                   className="w-full text-left px-3 py-2 text-gray-300 hover:text-cyan-400 hover:bg-gray-700 rounded transition-colors"
                   whileHover={{ x: 5 }}
                 >
-                  Terminal (⌘J)
+                  Terminal (⌘` or ⌘J)
                 </motion.button>
-              </div>
+                </div>
             </motion.div>
           )}
         </AnimatePresence>

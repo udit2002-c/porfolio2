@@ -51,7 +51,7 @@ export const Achievements = () => {
   };
 
   return (
-    <section id="achievements" className="py-20 relative overflow-hidden bg-black">
+    <section id="achievements" className="pt-20 pb-20 sm:pt-24 relative overflow-hidden bg-black">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

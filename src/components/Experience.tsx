@@ -56,7 +56,7 @@ export const Experience = () => {
   ];
 
   return (
-    <section id="experience" className="py-20 relative overflow-hidden bg-black">
+    <section id="experience" className="pt-20 pb-20 sm:pt-24 relative overflow-hidden bg-black">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

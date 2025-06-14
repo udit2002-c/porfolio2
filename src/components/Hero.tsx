@@ -3,7 +3,7 @@ import { Code, Terminal, FileCode, Brackets, GitBranch, Folder, Monitor, Databas
 
 export const Hero = () => {
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-black px-4 sm:px-6 lg:px-8">
+    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-black px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20">
       {/* Subtle grid background with animation */}
       <motion.div 
         className="absolute inset-0 opacity-20"
@@ -72,89 +72,8 @@ export const Hero = () => {
           {/* Main Editor Content */}
           <div className="bg-gray-900 rounded-b-lg border border-gray-700 p-4 sm:p-6 md:p-8">
             <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 items-center">
-              {/* Code Editor */}
-              <div className="lg:col-span-2">
-                <motion.div
-                  className="bg-black border border-gray-600 rounded p-4 sm:p-6 font-mono text-xs sm:text-sm"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                  {/* Line Numbers */}
-                  <div className="flex">
-                    <div className="text-gray-500 select-none mr-3 sm:mr-4 text-right" style={{ minWidth: '20px' }}>
-                      {[...Array(15)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: i * 0.1 }}
-                        >
-                          {i + 1}
-                        </motion.div>
-                      ))}
-                    </div>
-                    
-                    {/* Code Content */}
-                    <div className="flex-1">
-                      <div className="space-y-1">
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.1 }}
-                        >
-                          <span className="text-gray-500">// Full Stack Developer Profile</span>
-                        </motion.div>
-                        <div><span className="text-purple-400">import</span> <span className="text-cyan-400">{'{'} Developer {'}'}</span> <span className="text-purple-400">from</span> <span className="text-yellow-400">'./types'</span>;</div>
-                        <div></div>
-                        <div><span className="text-purple-400">const</span> <span className="text-cyan-400">developer</span>: <span className="text-green-400">Developer</span> = {"{"}</div>
-                        <div className="ml-4"><span className="text-green-400">name</span>: <span className="text-yellow-400">"Udit Narain Tewari"</span>,</div>
-                        <div className="ml-4"><span className="text-green-400">role</span>: <span className="text-yellow-400">"Full Stack Developer"</span>,</div>
-                        <div className="ml-4"><span className="text-green-400">education</span>: <span className="text-yellow-400">"Computer Science Engineer"</span>,</div>
-                        <div className="ml-4"><span className="text-green-400">university</span>: <span className="text-yellow-400">"NIE Mysore"</span>,</div>
-                        <div className="ml-4"><span className="text-green-400">experience</span>: [</div>
-                        <div className="ml-8"><span className="text-yellow-400">"React & TypeScript"</span>,</div>
-                        <div className="ml-8"><span className="text-yellow-400">"Node.js & Python"</span>,</div>
-                        <div className="ml-8"><span className="text-yellow-400">"Full Stack Development"</span></div>
-                        <div className="ml-4">],</div>
-                        <div className="ml-4"><span className="text-green-400">status</span>: <span className="text-cyan-400">StatusEnum</span>.<span className="text-cyan-400">AVAILABLE</span>,</div>
-                        <div className="ml-4"><span className="text-green-400">passion</span>: <span className="text-yellow-400">"Building innovative solutions"</span></div>
-                        <div>{"}"}</div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Terminal Output */}
-                <motion.div
-                  className="bg-black border border-gray-600 rounded mt-4 p-3 sm:p-4 font-mono text-xs sm:text-sm"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                  <div className="text-green-400 mb-2">$ npm start</div>
-                  <div className="text-gray-400 mb-1">Starting development server...</div>
-                  <div className="text-cyan-400 mb-1">✓ Portfolio compiled successfully!</div>
-                  <div className="text-gray-400 mb-2">
-                    <span className="text-green-400">{'>'}</span> Ready to showcase amazing projects
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-green-400">$ </span>
-                    <span className="text-white ml-1">
-                      <motion.span
-                        className="animate-pulse"
-                        animate={{ opacity: [1, 0, 1] }}
-                        transition={{ duration: 1, repeat: Infinity }}
-                      >
-                        |
-                      </motion.span>
-                    </span>
-                  </div>
-                </motion.div>
-              </div>
-
-              {/* Profile Section */}
-              <div className="lg:col-span-1">
+              {/* Profile Section - First on mobile, last on desktop */}
+              <div className="lg:col-span-1 order-1 lg:order-2">
                 <motion.div
                   className="text-center"
                   initial={{ opacity: 0, x: 20 }}
@@ -241,6 +160,87 @@ export const Hero = () => {
                       <Terminal className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
                       ./contact.sh
                     </motion.a>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Code Editor - Second on mobile, first on desktop */}
+              <div className="lg:col-span-2 order-2 lg:order-1">
+                <motion.div
+                  className="bg-black border border-gray-600 rounded p-4 sm:p-6 font-mono text-xs sm:text-sm"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  {/* Line Numbers */}
+                  <div className="flex">
+                    <div className="text-gray-500 select-none mr-3 sm:mr-4 text-right" style={{ minWidth: '20px' }}>
+                      {[...Array(15)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: i * 0.1 }}
+                        >
+                          {i + 1}
+                        </motion.div>
+                      ))}
+                    </div>
+                    
+                    {/* Code Content */}
+                    <div className="flex-1">
+                      <div className="space-y-1">
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.1 }}
+                        >
+                          <span className="text-gray-500">// Full Stack Developer Profile</span>
+                        </motion.div>
+                        <div><span className="text-purple-400">import</span> <span className="text-cyan-400">{'{'} Developer {'}'}</span> <span className="text-purple-400">from</span> <span className="text-yellow-400">'./types'</span>;</div>
+                        <div></div>
+                        <div><span className="text-purple-400">const</span> <span className="text-cyan-400">developer</span>: <span className="text-green-400">Developer</span> = {"{"}</div>
+                        <div className="ml-4"><span className="text-green-400">name</span>: <span className="text-yellow-400">"Udit Narain Tewari"</span>,</div>
+                        <div className="ml-4"><span className="text-green-400">role</span>: <span className="text-yellow-400">"Full Stack Developer"</span>,</div>
+                        <div className="ml-4"><span className="text-green-400">education</span>: <span className="text-yellow-400">"Computer Science Engineer"</span>,</div>
+                        <div className="ml-4"><span className="text-green-400">university</span>: <span className="text-yellow-400">"NIE Mysore"</span>,</div>
+                        <div className="ml-4"><span className="text-green-400">experience</span>: [</div>
+                        <div className="ml-8"><span className="text-yellow-400">"React & TypeScript"</span>,</div>
+                        <div className="ml-8"><span className="text-yellow-400">"Node.js & Python"</span>,</div>
+                        <div className="ml-8"><span className="text-yellow-400">"Full Stack Development"</span></div>
+                        <div className="ml-4">],</div>
+                        <div className="ml-4"><span className="text-green-400">status</span>: <span className="text-cyan-400">StatusEnum</span>.<span className="text-cyan-400">AVAILABLE</span>,</div>
+                        <div className="ml-4"><span className="text-green-400">passion</span>: <span className="text-yellow-400">"Building innovative solutions"</span></div>
+                        <div>{"}"}</div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Terminal Output */}
+                <motion.div
+                  className="bg-black border border-gray-600 rounded mt-4 p-3 sm:p-4 font-mono text-xs sm:text-sm"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                >
+                  <div className="text-green-400 mb-2">$ npm start</div>
+                  <div className="text-gray-400 mb-1">Starting development server...</div>
+                  <div className="text-cyan-400 mb-1">✓ Portfolio compiled successfully!</div>
+                  <div className="text-gray-400 mb-2">
+                    <span className="text-green-400">{'>'}</span> Ready to showcase amazing projects
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-green-400">$ </span>
+                    <span className="text-white ml-1">
+                      <motion.span
+                        className="animate-pulse"
+                        animate={{ opacity: [1, 0, 1] }}
+                        transition={{ duration: 1, repeat: Infinity }}
+                      >
+                        |
+                      </motion.span>
+                    </span>
                   </div>
                 </motion.div>
               </div>
