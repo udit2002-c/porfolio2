@@ -273,7 +273,7 @@ The portfolio is fully responsive with special mobile optimizations:
 
 ### **Connect with Me**
 - 📧 Email: [udittewari888@gmail.com](mailto:udittewari888@gmail.com)
-- 🐙 GitHub: [udit2002-c]((https://github.com/udit2002-c))
+- 🐙 GitHub: [udit2002-c](https://github.com/udit2002-c)
 - 💼 LinkedIn: [udit-tewari-24b8b3252](https://www.linkedin.com/in/udit-narain-tewari)
 - 📱 Phone: +91-8887547458
 
