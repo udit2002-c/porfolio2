@@ -14,12 +14,39 @@ interface ExperienceItem {
 
 export const Experience = () => {
   const experiences: ExperienceItem[] = [
+    
     {
       id: 1,
+      title: "SDE Intern",
+      company: "Zynix AI",
+      location: "Bengaluru, Karnataka",
+      duration: "Mar 2026 – Present",
+      featured: true,
+      type: "internship",
+      description: [
+        "Developing AI agents using Python-based frameworks with tool integration and workflow orchestration.",
+        "Building modular agent workflows and integrating external tools to automate intelligent decision-making pipelines."
+      ]
+    },
+    {
+      id: 2,
+      title: "SDE Intern",
+      company: "Exinous Technology, Inc.",
+      location: "Mysore, Karnataka",
+      duration: "Aug 2025 – Feb 2026",
+      type: "internship",
+      description: [
+        "Wrote comprehensive unit tests for LoopBack 4 APIs using TypeScript, Mocha, and Sinon.",
+        "Contributed to backend service development using Golang and supported system reliability improvements through Agile sprints and CI workflows in GitHub Actions.",
+        "Built and enhanced responsive UI components using Vue.js and PrimeVue, improving frontend performance and user experience."
+      ]
+    },
+    {
+      id: 3,
       title: "Full Stack Developer Intern",
       company: "infAInite",
       location: "Remote",
-      duration: "May 2025 – Present",
+      duration: "May 2025 – Jul 2025",
       featured: true,
       type: "internship",
       description: [
@@ -28,7 +55,7 @@ export const Experience = () => {
       ]
     },
     {
-      id: 2,
+      id: 4,
       title: "Software Engineering Virtual Intern",
       company: "Hewlett Packard Enterprise (Forage)",
       location: "Virtual",
@@ -41,7 +68,7 @@ export const Experience = () => {
       ]
     },
     {
-      id: 3,
+      id: 5,
       title: "Treasurer",
       company: "Onyx E-Cell",
       location: "Mysore, India",
@@ -54,7 +81,6 @@ export const Experience = () => {
       ]
     }
   ];
-
   return (
     <section id="experience" className="pt-20 pb-20 sm:pt-24 relative overflow-hidden bg-black">
       <div className="container mx-auto px-4 relative z-10">

@@ -45,7 +45,7 @@ export const Achievements = () => {
   ];
 
   const academicData = {
-    nie: { grade: 8.50, total: 10.0 },
+    nie: { grade: 8.60, total: 10.0 },
     icse: { grade: 91, total: 100 },
     isc: { grade: 90.25, total: 100 }
   };
